@@ -1,0 +1,25 @@
+{
+  "name": "t-vlingar",
+  "version": "1.0.0",
+  "description": "visa upp för niorna",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oscarilvoranta/T-vlingar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oscarilvoranta/T-vlingar/issues"
+  },
+  "homepage": "https://github.com/oscarilvoranta/T-vlingar#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "sqlite3": "^4.1.0"
+  }
+}
