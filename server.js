@@ -31,8 +31,8 @@ app.post('/add', function(req, res){
             console.log(err.message)
         }
         else{
-            console.log(`Added User: ${fn} ${ln}!`)
-            res.redirect('/users.html')
+            console.log(`Added User: !`)
+            res.redirect('/leaderboard.html')
         }
     })
 })
