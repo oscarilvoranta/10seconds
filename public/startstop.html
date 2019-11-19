@@ -15,89 +15,75 @@
       var timeTo = 0;
       var times = [];
       var games = 0;
-
-      function chooseTime(time){
-        document.getElementById("result").value = time;
-        document.getElementById("sub").hidden = false;
-        document.getElementById("x").hidden = true;
-      }
+      var tries = 3;
 
       function startTimer(){
           d = new Date();
           startTime = d.getTime();
-          document.getElementById("textField").innerHTML = 'Press <span class="sto">STOP</span> after 5 seconds';
-          document.getElementById("sta").style.backgroundColor = "#ccffcc";
-          document.getElementById("sto").style.backgroundColor = "#ff0066";
-          document.getElementById("sto").disabled = false;
-          document.getElementById("sta").disabled = true;
+          document.getElementById("textField").innerHTML = 'Press <span class="sto">STOP</span> after 10 seconds';
           document.getElementById("addResult").hidden = true;
           document.getElementById("winText").innerHTML = "";
-          document.getElementById("sub").hidden = true;
-      }
+          document.getElementById("ss").onclick = stopTimer
+          tries--
+          document.getElementById("ss").value = "STOP ("+ tries + ")"
+          
+        }
 
       function stopTimer()
       {
           d = new Date();
           stopTime = d.getTime();
           timeDiff = stopTime - startTime;
-          if(5000 - timeDiff < 0){
-            timeTo = Math.abs(5000 - timeDiff)
+          var displayTime = timeDiff / 1000
+          if(10000 - timeDiff < 0){
+            timeTo = Math.abs(10000 - timeDiff)
           }
           else{
-            timeTo = 5000 - timeDiff;
+            timeTo = 10000 - timeDiff;
           }
           games++
           times.push(timeTo);
-          document.getElementById("textField").innerHTML = timeDiff + " ms " + "<br>" + "(" + timeTo + "ms " + "from " + "5 sec" + ")";
-          document.getElementById("sta").style.backgroundColor = "#66ff66";
-          document.getElementById("sto").style.backgroundColor = "#ffcccc";
-          document.getElementById("sta").disabled = false;
-          document.getElementById("sto").disabled = true;
-          document.getElementById("addResult").hidden = false;
-          if(timeDiff == 5000){
-            document.getElementById("gif").src="https://giphy.com/embed/LOcPt9gfuNOSI";
-          }
-          else if(4900 <= timeDiff && timeDiff <= 5100){
-            document.getElementById("winText").innerHTML = "You Won! :D";
-          }
-          else{
-            document.getElementById("winText").innerHTML = "Try again?";
-          }
+          document.getElementById("textField").innerHTML = timeTo + "ms from 10 sec ("  +displayTime + " sec )";
+          document.getElementById("ss").onclick = startTimer
+          document.getElementById("ss").value = "START (" + tries + ")"
+          $("#turns").append(`<h1 class="a">${games}# ${times[games-1]}</h1>`)
+          //document.getElementById("turns").innerHTML = `<h1 class="a">${times[games-1]}</h1>`
+          
+            document.getElementById("winText").innerHTML = "Try again";
           if(games == 1){
-            document.getElementById("result").value = timeTo;
-            document.getElementById("sub").hidden = false;
+            document.getElementById("turns").hidden = false;
           }
-          else if(games == 2){
-              $("#x").append(`<input type='button' value='${times[games-2]}' onclick='chooseTime(${times[games-2]})'>`)
-               $("#x").append(`<input type='button' value='${times[games-1]}' onclick='chooseTime(${times[games-1]})'>`)
-          }
-          else if(games > 2){
-            $("#x").append(`<input type='button' value='${times[games-1]}' onclick='chooseTime(${times[games-1]})'>`)
+          if(games == 3){
+            document.getElementById("addResult").hidden = false;
+            var x = Math.min(...times)
+            document.getElementById("result").value = x
+            document.getElementById("winText").innerHTML = "Submit your score (" + x + " ms)";
+            document.getElementById("ss").hidden = true;
+            
           }
       }
       
     </script>
   </head>
   <body>
-      <div class="header">
-            <a class="active" href="http://localhost:3000/startstop.html">Game</a>
-            <a href="http://localhost:3000/leaderboard.html">Leaderboard</a>
+        <div class="header">
+            <a class="active" href="http://localhost:3000/startstop.html">GAME</a>
+            <a href="http://localhost:3000/leaderboard.html">LEADERBOARD</a>
         </div>
     <div id="container">
       <h1 id="textField">Press <span class="sta">START</span></h1>
       <span class="btn">
-        <button id="sta" onClick="startTimer()">START</button>
-        <button id="sto" onClick="stopTimer()" disabled>STOP</button>
+        <input id="ss" type="button" value="START (3)" onClick="startTimer()">
       </span>
       <h1 id="winText"></h1>
       <form id="addResult" action="/add" method="POST" hidden>
-        <input id="firstName" name="firstName" type="text" >
-        <input id="lastName" name="lastName" type="text" >
+        <input id="firstName" name="firstName" type="text" placeholder="First Name">
+        <input id="lastName" name="lastName" type="text" placeholder="Last Name">
+        <input id="sub" type="submit" value="SUBMIT">
         <input id="result" name="result" type="hidden">
-        <input id="sub" type="submit" hidden><br>
-        <div id="x"></div>
+        
       </form>
-      <iframe src="" width="480" height="195" frameBorder="0" class="giphy-embed" id="gif"></iframe>
+      <div id="turns" hidden></div>
     </div>
   </body>
 </html>

@@ -11,10 +11,10 @@
   </head>
   <body>
       <div class="header">
-          <a href="http://localhost:3000/startstop.html">Game</a>
-          <a class="active" href="http://localhost:3000/leaderboard.html">Leaderboard</a>
+          <a href="http://localhost:3000/startstop.html">GAME</a>
+          <a class="active" href="http://localhost:3000/leaderboard.html">LEADERBOARD</a>
       </div>
-    <div id="container">
+    <div id="container2">
       <table id="leaderboard"></table>
     </div>
   </body>
@@ -42,7 +42,7 @@
                   arr.push({name:all.data[i].first_name+" "+all.data[i].last_name, result:all.data[i].result})
               }
               np = arr.sort(compare2)
-              row = `<tr><td>Rank</td><td>name</td><td>ms from 5 sec</td></tr>`
+              row = `<tr><td>rank</td><td>name</td><td>time from 10 sec (ms)</td></tr>`
               for(var l=0;l<np.length;l++){
                   row += `<tr><td>${l+1}</td><td>${np[l].name}</td><td>${np[l].result}</td></tr>`
               }
